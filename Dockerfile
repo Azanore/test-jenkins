@@ -1,9 +1,7 @@
-FROM jenkins/jenkins:lts
-
-USER root
-
-# Installe NodeJS et npm (exemple avec Node 16)
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
-  && apt-get install -y nodejs
-
-USER jenkins
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["node", "app.js"]
